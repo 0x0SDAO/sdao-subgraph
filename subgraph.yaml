@@ -8,11 +8,11 @@ dataSources:
   #Staking Contract
   - kind: ethereum/contract
     name: Staking
-    network: testnet
+    network: bsc
     source:
       address: '0x5BF599A3c8168298d9c8c4452131238AD338D3B1'
       abi: Staking
-      startBlock: 15798912
+#      startBlock: 15798912
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -40,8 +40,6 @@ dataSources:
           file: ./abis/BondingCalculator.json
         - name: BEP20
           file: ./abis/libraries/BEP20.json
-        - name: MasterChef
-          file: ./abis/libraries/MasterChef.json
       callHandlers:
         - function: stake(address,uint256,bool)
           handler: handleStake
@@ -51,11 +49,11 @@ dataSources:
   #BUSD Bond
   - kind: ethereum/contract
     name: BUSDBond
-    network: testnet
+    network: bsc
     source:
       address: '0x9C086C0e5d5C059ec4feD8dD19B20EEB613bBC74'
       abi: BUSDBond
-      startBlock: 15798912
+#      startBlock: 15798912
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -92,11 +90,11 @@ dataSources:
   #SDOGE-BUSD Bond
   - kind: ethereum/contract
     name: SDOGEBUSDBond
-    network: testnet
+    network: bsc
     source:
       address: '0xacdd2c6d14753D87929a3C16D6729b0A4Da4F14B'
       abi: SDOGEBUSDBond
-      startBlock: 15798912
+#      startBlock: 15798912
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -133,11 +131,11 @@ dataSources:
   #WBNB Bond
   - kind: ethereum/contract
     name: WBNBBond
-    network: testnet
+    network: bsc
     source:
       address: '0x1Ba47279fd3426e9310F8bBbff042B338bB9DE85'
       abi: WBNBBond
-      startBlock: 15798912
+#      startBlock: 15798912
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -174,11 +172,11 @@ dataSources:
   #SSDOGE
   - kind: ethereum/contract
     name: StakedScholarDogeToken
-    network: testnet
+    network: bsc
     source:
       address: '0x4c7f33Bcc0f8fb31CA4059FA501e8aE34bc5Cf33'
       abi: StakedScholarDogeToken
-      startBlock: 15798912
+#      startBlock: 15798912
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
