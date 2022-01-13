@@ -1,0 +1,139 @@
+type DailyBond @entity {
+  id: ID!
+  timestamp: BigInt!
+  token: Token!
+  amount: BigDecimal!
+  value: BigDecimal!
+}
+
+type SDOGEie @entity {
+  id: ID!
+  bondDeposits: [Deposit!]! @derivedFrom(field: "sdogeie")
+  bondRedemptions: [Redemption!]! @derivedFrom(field: "sdogeie")
+  stakeTransactions: [Stake!]! @derivedFrom(field: "sdogeie")
+  unstakeTransactions: [Unstake!]! @derivedFrom(field: "sdogeie")
+  historicBalance: [SDOGEieBalance!]! @derivedFrom(field: "sdogeie")
+  lastBalance: SDOGEieBalance
+  active: Boolean!
+}
+
+type SDOGEieBalance @entity {
+  id: ID!
+  sdogeie: SDOGEie!
+  ssdogeBalance: BigDecimal!
+  sdogeBalance: BigDecimal!
+  bondBalance: BigDecimal!
+  dollarBalance: BigDecimal!
+  stakes: [ContractInfo!]
+  bonds: [ContractInfo!]
+  timestamp: BigInt!
+}
+
+type Deposit @entity {
+  id: ID!
+  transaction: Transaction!
+  sdogeie: SDOGEie!
+  amount: BigDecimal!
+  maxPremium: BigDecimal!
+  token: Token!
+  value: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Redemption @entity {
+  id: ID!
+  transaction: Transaction
+  sdogeie: SDOGEie
+  token: Token
+  timestamp: BigInt
+}
+
+type Stake @entity {
+  id: ID!
+  transaction: Transaction!
+  sdogeie: SDOGEie!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Unstake @entity {
+  id: ID!
+  transaction: Transaction!
+  sdogeie: SDOGEie!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Rebase @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedSDOGEs: BigDecimal!
+  percentage: BigDecimal!
+  contract: String!
+  timestamp: BigInt!
+  value: BigDecimal!
+}
+
+type DailyStakingReward @entity {
+  id: ID!
+  timestamp: BigInt!
+  amount: BigDecimal!
+  value: BigDecimal!
+}
+
+type Transaction @entity {
+  id: ID!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  from: Bytes!
+  to: Bytes
+  value: BigInt!
+  gasUsed: BigInt!
+  gasPrice: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+}
+
+type ProtocolMetric @entity {
+  id: ID!
+  timestamp: BigInt!
+  sdogeCirculatingSupply: BigDecimal!
+  ssdogeCirculatingSupply: BigDecimal!
+  totalSupply: BigDecimal!
+  sdogePrice: BigDecimal!
+  marketCap: BigDecimal!
+  totalValueLocked: BigDecimal!
+  treasuryRiskFreeValue: BigDecimal!
+  treasuryMarketValue: BigDecimal!
+  nextEpochRebase: BigDecimal!
+  nextDistributedSdoge: BigDecimal!
+  treasuryBUSDRiskFreeValue: BigDecimal!
+  treasuryBUSDMarketValue: BigDecimal!
+  treasurySDOGEBUSDPOL: BigDecimal!
+  currentAPY: BigDecimal!
+  holders: BigInt!
+}
+
+type ContractInfo @entity {
+  id: ID!
+  name: String
+  contract: String
+  amount: BigDecimal
+}
+
+type Aux @entity {
+  id: ID!
+  value: BigInt!
+}
+
+type BondDiscount @entity {
+  id: ID!
+  timestamp: BigInt!
+  busd_discount: BigDecimal!
+  sdogebusd_discount: BigDecimal!
+  wbnb_discount: BigDecimal!
+}

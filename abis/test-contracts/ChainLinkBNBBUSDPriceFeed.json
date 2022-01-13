@@ -1,0 +1,49 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ChainLinkBNBBUSDPriceFeed",
+  "sourceName": "contracts/test-contracts/ChainLinkBNBBUSDPriceFeed.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "latestRoundData",
+      "outputs": [
+        {
+          "internalType": "uint80",
+          "name": "roundId",
+          "type": "uint80"
+        },
+        {
+          "internalType": "int256",
+          "name": "answer",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "updatedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint80",
+          "name": "answeredInRound",
+          "type": "uint80"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5060a88061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063feaf968c14602d575b600080fd5b6033607d565b604051808669ffffffffffffffffffff1681526020018581526020018481526020018381526020018269ffffffffffffffffffff1681526020019550505050505060405180910390f35b680200000000000365ee90640aef738bc0906361d67c36908190849056fea164736f6c6343000705000a",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063feaf968c14602d575b600080fd5b6033607d565b604051808669ffffffffffffffffffff1681526020018581526020018481526020018381526020018269ffffffffffffffffffff1681526020019550505050505060405180910390f35b680200000000000365ee90640aef738bc0906361d67c36908190849056fea164736f6c6343000705000a",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
