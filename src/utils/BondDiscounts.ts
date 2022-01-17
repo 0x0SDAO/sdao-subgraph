@@ -1,20 +1,20 @@
 import { Address, BigDecimal, BigInt, log} from '@graphprotocol/graph-ts'
-import { BUSDBond } from '../../generated/BUSDBond/BUSDBond';
-import { SDOGEBUSDBond } from '../../generated/SDOGEBUSDBond/SDOGEBUSDBond';
-import { WBNBBond } from '../../generated/WBNBBond/WBNBBond';
+import { USDCBond } from '../../generated/USDCBond/USDCBond';
+import { SDAOUSDCBond } from '../../generated/SDAOUSDCBond/SDAOUSDCBond';
+import { WFTMBond } from '../../generated/WFTMBond/WFTMBond';
 
 import { BondDiscount, Transaction } from '../../generated/schema'
 import {
-    BUSDBOND_CONTRACT,
-    BUSDBOND_CONTRACT_BLOCK,
-    SDOGEBUSDBOND_CONTRACT,
-    SDOGEBUSDBOND_CONTRACT_BLOCK,
-    WBNBBOND_CONTRACT,
-    WBNBBOND_CONTRACT_BLOCK
+    USDCBOND_CONTRACT,
+    USDCBOND_CONTRACT_BLOCK,
+    SDAOUSDCBOND_CONTRACT,
+    SDAOUSDCBOND_CONTRACT_BLOCK,
+    WFTMBOND_CONTRACT,
+    WFTMBOND_CONTRACT_BLOCK
 } from './Constants';
 import { hourFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
-import { getSDOGEUSDRate } from './Price';
+import { getSDAOUSDRate } from './Price';
 
 export function loadOrCreateBondDiscount(timestamp: BigInt): BondDiscount{
     let hourTimestamp = hourFromTimestamp(timestamp);
@@ -23,9 +23,9 @@ export function loadOrCreateBondDiscount(timestamp: BigInt): BondDiscount{
     if (bondDiscount == null) {
         bondDiscount = new BondDiscount(hourTimestamp)
         bondDiscount.timestamp = timestamp
-        bondDiscount.busd_discount  = BigDecimal.fromString("0")
-        bondDiscount.sdogebusd_discount = BigDecimal.fromString("0")
-        bondDiscount.wbnb_discount = BigDecimal.fromString("0")
+        bondDiscount.usdc_discount  = BigDecimal.fromString("0")
+        bondDiscount.sdaousdc_discount = BigDecimal.fromString("0")
+        bondDiscount.wftm_discount = BigDecimal.fromString("0")
         bondDiscount.save()
     }
     return bondDiscount as BondDiscount
@@ -33,41 +33,41 @@ export function loadOrCreateBondDiscount(timestamp: BigInt): BondDiscount{
 
 export function updateBondDiscounts(transaction: Transaction): void{
     let bd = loadOrCreateBondDiscount(transaction.timestamp);
-    let sdogeRate = getSDOGEUSDRate();
+    let sdaoRate = getSDAOUSDRate();
 
-    //BUSD
-    if(transaction.blockNumber.gt(BigInt.fromString(BUSDBOND_CONTRACT_BLOCK))){
-        let bond = BUSDBond.bind(Address.fromString(BUSDBOND_CONTRACT))
+    //USDC
+    if(transaction.blockNumber.gt(BigInt.fromString(USDCBOND_CONTRACT_BLOCK))){
+        let bond = USDCBond.bind(Address.fromString(USDCBOND_CONTRACT))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
-            bd.busd_discount = sdogeRate.div(toDecimal(price_call.value, 18))
-            bd.busd_discount = bd.busd_discount.minus(BigDecimal.fromString("1"))
-            bd.busd_discount = bd.busd_discount.times(BigDecimal.fromString("100"))
-            log.debug("BUSD Discount SDOGE price {}  Bond Price {}  Discount {}", [sdogeRate.toString(), price_call.value.toString(), bd.busd_discount.toString()])
+            bd.usdc_discount = sdaoRate.div(toDecimal(price_call.value, 6))
+            bd.usdc_discount = bd.usdc_discount.minus(BigDecimal.fromString("1"))
+            bd.usdc_discount = bd.usdc_discount.times(BigDecimal.fromString("100"))
+            log.debug("USDC Discount SDAO price {}  Bond Price {}  Discount {}", [sdaoRate.toString(), price_call.value.toString(), bd.usdc_discount.toString()])
         }
     }
 
-    //SDOGE-BUSD
-    if(transaction.blockNumber.gt(BigInt.fromString(SDOGEBUSDBOND_CONTRACT_BLOCK))){
-        let bond = SDOGEBUSDBond.bind(Address.fromString(SDOGEBUSDBOND_CONTRACT))
+    //SDAO-USDC
+    if(transaction.blockNumber.gt(BigInt.fromString(SDAOUSDCBOND_CONTRACT_BLOCK))){
+        let bond = SDAOUSDCBond.bind(Address.fromString(SDAOUSDCBOND_CONTRACT))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
-            bd.sdogebusd_discount = sdogeRate.div(toDecimal(price_call.value, 18))
-            bd.sdogebusd_discount = bd.sdogebusd_discount.minus(BigDecimal.fromString("1"))
-            bd.sdogebusd_discount = bd.sdogebusd_discount.times(BigDecimal.fromString("100"))
-            log.debug("SDOGEBUSD Discount SDOGE price {}  Bond Price {}  Discount {}", [sdogeRate.toString(), price_call.value.toString(), bd.sdogebusd_discount.toString()])
+            bd.sdaousdc_discount = sdaoRate.div(toDecimal(price_call.value, 18))
+            bd.sdaousdc_discount = bd.sdaousdc_discount.minus(BigDecimal.fromString("1"))
+            bd.sdaousdc_discount = bd.sdaousdc_discount.times(BigDecimal.fromString("100"))
+            log.debug("SDAOUSDC Discount SDAO price {}  Bond Price {}  Discount {}", [sdaoRate.toString(), price_call.value.toString(), bd.sdaousdc_discount.toString()])
         }
     }
 
-    //BNB
-    if(transaction.blockNumber.gt(BigInt.fromString(WBNBBOND_CONTRACT_BLOCK))){
-        let bond = WBNBBond.bind(Address.fromString(WBNBBOND_CONTRACT))
+    //FTM
+    if(transaction.blockNumber.gt(BigInt.fromString(WFTMBOND_CONTRACT_BLOCK))){
+        let bond = WFTMBond.bind(Address.fromString(WFTMBOND_CONTRACT))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
-            bd.wbnb_discount = sdogeRate.div(toDecimal(price_call.value, 18))
-            bd.wbnb_discount = bd.wbnb_discount.minus(BigDecimal.fromString("1"))
-            bd.wbnb_discount = bd.wbnb_discount.times(BigDecimal.fromString("100"))
-            log.debug("ETH Discount OHM price {}  Bond Price {}  Discount {}", [sdogeRate.toString(), price_call.value.toString(), bd.wbnb_discount.toString()])
+            bd.wftm_discount = sdaoRate.div(toDecimal(price_call.value, 18))
+            bd.wftm_discount = bd.wftm_discount.minus(BigDecimal.fromString("1"))
+            bd.wftm_discount = bd.wftm_discount.times(BigDecimal.fromString("100"))
+            log.debug("FTM Discount SDAO price {}  Bond Price {}  Discount {}", [sdaoRate.toString(), price_call.value.toString(), bd.wftm_discount.toString()])
         }
     }
     

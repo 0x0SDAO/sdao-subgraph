@@ -1,48 +1,49 @@
 import {
-    SDOGE_BUSD_PAIR_CONTRACT,
-    WBNB_BUSD_PAIR_CONTRACT
+    SDAO_USDC_PAIR_CONTRACT,
+    WFTM_USDC_PAIR_CONTRACT
 } from './Constants'
 import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts'
 import { PancakePair } from '../../generated/Staking/PancakePair';
 import { toDecimal } from './Decimals'
 
+const BIG_DECIMAL_1E6 = BigDecimal.fromString('1e6')
+const BIG_DECIMAL_1E9 = BigDecimal.fromString('1e9')
+const BIG_DECIMAL_1E18 = BigDecimal.fromString('1e18')
 
-let BIG_DECIMAL_1E9 = BigDecimal.fromString('1e9')
-let BIG_DECIMAL_1E12 = BigDecimal.fromString('1e12')
+export function getFTMUSDCRate(): BigDecimal {
+    const pair = PancakePair.bind(Address.fromString(WFTM_USDC_PAIR_CONTRACT))
 
-export function getBNBUSDRate(): BigDecimal {
-    let pair = PancakePair.bind(Address.fromString(WBNB_BUSD_PAIR_CONTRACT))
-
-    let reserves = pair.getReserves()
-    let reserve0 = reserves.value0.toBigDecimal()
-    let reserve1 = reserves.value1.toBigDecimal()
-
-    let bnbRate = reserve0.div(reserve1).times(BIG_DECIMAL_1E12)
-    log.debug("BNB rate {}", [bnbRate.toString()])
+    const reserves = pair.getReserves()
+    const reserve0 = reserves.value0.toBigDecimal()
+    const reserve1 = reserves.value1.toBigDecimal()
+    // TODO: set decimals to 6 below ?
+    let ftmRate = reserve0.div(reserve1).times(BIG_DECIMAL_1E18.div(BIG_DECIMAL_1E6))
+    log.debug("FTM rate {}", [ftmRate.toString()])
     
-    return bnbRate
+    return ftmRate
 }
 
-export function getSDOGEUSDRate(): BigDecimal {
-    let pair = PancakePair.bind(Address.fromString(SDOGE_BUSD_PAIR_CONTRACT))
+export function getSDAOUSDRate(): BigDecimal {
+    let pair = PancakePair.bind(Address.fromString(SDAO_USDC_PAIR_CONTRACT))
 
     let reserves = pair.getReserves()
     let reserve0 = reserves.value0.toBigDecimal()
     let reserve1 = reserves.value1.toBigDecimal()
+    // TODO: set decimals to -9 below ?
+    let sdaoRate = reserve0.div(reserve1).div(BIG_DECIMAL_1E9.div(BIG_DECIMAL_1E6))
+    log.debug("SDAO rate {}", [sdaoRate.toString()])
 
-    let sdogeRate = reserve1.div(reserve0).div(BIG_DECIMAL_1E9)
-    log.debug("SDOGE rate {}", [sdogeRate.toString()])
-
-    return sdogeRate
+    return sdaoRate
 }
 
-//(slp_treasury/slp_supply)*(2*sqrt(lp_dai * lp_ohm))
+// TODO: SEE if need to fix calculation below
+//(slp_treasury/slp_supply)*(2*sqrt(lp_dai * lp_sdao))
 export function getDiscountedPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{
     let pair = PancakePair.bind(Address.fromString(pair_adress))
 
     let total_lp = pair.totalSupply()
-    let lp_token_1 = toDecimal(pair.getReserves().value0, 9)
-    let lp_token_2 = toDecimal(pair.getReserves().value1, 18)
+    let lp_token_1 = toDecimal(pair.getReserves().value0, 6)
+    let lp_token_2 = toDecimal(pair.getReserves().value1, 9)
     let kLast = lp_token_1.times(lp_token_2).truncate(0).digits
 
     let part1 = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
@@ -59,21 +60,21 @@ export function getPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{
     let lp_token_0 = pair.getReserves().value0
     let lp_token_1 = pair.getReserves().value1
     let ownedLP = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
-    let sdoge_value = toDecimal(lp_token_0, 9).times(getSDOGEUSDRate())
-    let total_lp_usd = sdoge_value.plus(toDecimal(lp_token_1, 18))
+    let sdao_value = toDecimal(lp_token_1, 9).times(getSDAOUSDRate())
+    let total_lp_usd = sdao_value.plus(toDecimal(lp_token_0, 6))
 
     return ownedLP.times(total_lp_usd)
 }
 
-export function getPairWBNB(lp_amount: BigInt, pair_adress: string): BigDecimal{
+export function getPairWFTM(lp_amount: BigInt, pair_adress: string): BigDecimal{
     let pair = PancakePair.bind(Address.fromString(pair_adress))
     let total_lp = pair.totalSupply()
     let lp_token_0 = pair.getReserves().value0
     let lp_token_1 = pair.getReserves().value1
     let ownedLP = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
-    let ohm_value = toDecimal(lp_token_0, 9).times(getSDOGEUSDRate())
-    let eth_value = toDecimal(lp_token_1, 18).times(getBNBUSDRate())
-    let total_lp_usd = ohm_value.plus(eth_value)
+    let sdao_value = toDecimal(lp_token_1, 9).times(getSDAOUSDRate())
+    let ftm_value = toDecimal(lp_token_0, 18).times(getFTMUSDCRate())
+    let total_lp_usd = sdao_value.plus(ftm_value)
 
     return ownedLP.times(total_lp_usd)
 }

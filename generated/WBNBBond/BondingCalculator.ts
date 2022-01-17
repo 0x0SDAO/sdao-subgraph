@@ -15,14 +15,14 @@ export class BondingCalculator extends ethereum.SmartContract {
     return new BondingCalculator("BondingCalculator", address);
   }
 
-  SDOGE(): Address {
-    let result = super.call("SDOGE", "SDOGE():(address)", []);
+  SDAO(): Address {
+    let result = super.call("SDAO", "SDAO():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_SDOGE(): ethereum.CallResult<Address> {
-    let result = super.tryCall("SDOGE", "SDOGE():(address)", []);
+  try_SDAO(): ethereum.CallResult<Address> {
+    let result = super.tryCall("SDAO", "SDAO():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -138,7 +138,7 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _SDOGE(): Address {
+  get _SDAO(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }

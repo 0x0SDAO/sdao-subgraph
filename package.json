@@ -1,16 +1,16 @@
 {
-  "name": "sdoge-subgraph",
+  "name": "sdao-subgraph",
   "version": "0.1.0",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sdoge",
-    "create-local": "graph create --node http://pokt.drondin.xyz:18020/ sdoge",
-    "remove-local": "graph remove --node http://pokt.drondin.xyz:18020/ sdoge",
-    "deploy-local": "graph deploy --node http://pokt.drondin.xyz:18020/ --ipfs http://pokt.drondin.xyz:15001 sdoge"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sdao",
+    "create-local": "graph create --node http://pokt.drondin.xyz:18020/ sdao",
+    "remove-local": "graph remove --node http://pokt.drondin.xyz:18020/ sdao",
+    "deploy-local": "graph deploy --node http://pokt.drondin.xyz:18020/ --ipfs http://pokt.drondin.xyz:15001 sdao"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.21.0",
-    "@graphprotocol/graph-ts": "^0.20.0"
+    "@graphprotocol/graph-ts": "^0.22.0"
   }
 }

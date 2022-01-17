@@ -166,7 +166,7 @@ export class OwnershipPushed__Params {
   }
 }
 
-export class BUSDBond__adjustmentResult {
+export class USDCBond__adjustmentResult {
   value0: boolean;
   value1: BigInt;
   value2: BigInt;
@@ -198,7 +198,7 @@ export class BUSDBond__adjustmentResult {
   }
 }
 
-export class BUSDBond__bondInfoResult {
+export class USDCBond__bondInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -221,7 +221,7 @@ export class BUSDBond__bondInfoResult {
   }
 }
 
-export class BUSDBond__termsResult {
+export class USDCBond__termsResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -257,9 +257,9 @@ export class BUSDBond__termsResult {
   }
 }
 
-export class BUSDBond extends ethereum.SmartContract {
-  static bind(address: Address): BUSDBond {
-    return new BUSDBond("BUSDBond", address);
+export class USDCBond extends ethereum.SmartContract {
+  static bind(address: Address): USDCBond {
+    return new USDCBond("USDCBond", address);
   }
 
   DAO(): Address {
@@ -277,14 +277,14 @@ export class BUSDBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  SDOGE(): Address {
-    let result = super.call("SDOGE", "SDOGE():(address)", []);
+  SDAO(): Address {
+    let result = super.call("SDAO", "SDAO():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_SDOGE(): ethereum.CallResult<Address> {
-    let result = super.tryCall("SDOGE", "SDOGE():(address)", []);
+  try_SDAO(): ethereum.CallResult<Address> {
+    let result = super.tryCall("SDAO", "SDAO():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -292,14 +292,14 @@ export class BUSDBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  adjustment(): BUSDBond__adjustmentResult {
+  adjustment(): USDCBond__adjustmentResult {
     let result = super.call(
       "adjustment",
       "adjustment():(bool,uint256,uint256,uint256,uint256)",
       []
     );
 
-    return new BUSDBond__adjustmentResult(
+    return new USDCBond__adjustmentResult(
       result[0].toBoolean(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -308,7 +308,7 @@ export class BUSDBond extends ethereum.SmartContract {
     );
   }
 
-  try_adjustment(): ethereum.CallResult<BUSDBond__adjustmentResult> {
+  try_adjustment(): ethereum.CallResult<USDCBond__adjustmentResult> {
     let result = super.tryCall(
       "adjustment",
       "adjustment():(bool,uint256,uint256,uint256,uint256)",
@@ -319,7 +319,7 @@ export class BUSDBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new BUSDBond__adjustmentResult(
+      new USDCBond__adjustmentResult(
         value[0].toBoolean(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -348,14 +348,14 @@ export class BUSDBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  bondInfo(param0: Address): BUSDBond__bondInfoResult {
+  bondInfo(param0: Address): USDCBond__bondInfoResult {
     let result = super.call(
       "bondInfo",
       "bondInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
-    return new BUSDBond__bondInfoResult(
+    return new USDCBond__bondInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -363,7 +363,7 @@ export class BUSDBond extends ethereum.SmartContract {
     );
   }
 
-  try_bondInfo(param0: Address): ethereum.CallResult<BUSDBond__bondInfoResult> {
+  try_bondInfo(param0: Address): ethereum.CallResult<USDCBond__bondInfoResult> {
     let result = super.tryCall(
       "bondInfo",
       "bondInfo(address):(uint256,uint256,uint256,uint256)",
@@ -374,7 +374,7 @@ export class BUSDBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new BUSDBond__bondInfoResult(
+      new USDCBond__bondInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -726,14 +726,14 @@ export class BUSDBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  terms(): BUSDBond__termsResult {
+  terms(): USDCBond__termsResult {
     let result = super.call(
       "terms",
       "terms():(uint256,uint256,uint256,uint256,uint256,uint256)",
       []
     );
 
-    return new BUSDBond__termsResult(
+    return new USDCBond__termsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -743,7 +743,7 @@ export class BUSDBond extends ethereum.SmartContract {
     );
   }
 
-  try_terms(): ethereum.CallResult<BUSDBond__termsResult> {
+  try_terms(): ethereum.CallResult<USDCBond__termsResult> {
     let result = super.tryCall(
       "terms",
       "terms():(uint256,uint256,uint256,uint256,uint256,uint256)",
@@ -754,7 +754,7 @@ export class BUSDBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new BUSDBond__termsResult(
+      new USDCBond__termsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -828,7 +828,7 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _SDOGE(): Address {
+  get _SDAO(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 

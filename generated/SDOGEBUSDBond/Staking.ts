@@ -141,14 +141,14 @@ export class Staking extends ethereum.SmartContract {
     return new Staking("Staking", address);
   }
 
-  SDOGE(): Address {
-    let result = super.call("SDOGE", "SDOGE():(address)", []);
+  SDAO(): Address {
+    let result = super.call("SDAO", "SDAO():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_SDOGE(): ethereum.CallResult<Address> {
-    let result = super.tryCall("SDOGE", "SDOGE():(address)", []);
+  try_SDAO(): ethereum.CallResult<Address> {
+    let result = super.tryCall("SDAO", "SDAO():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -285,14 +285,14 @@ export class Staking extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  sSDOGE(): Address {
-    let result = super.call("sSDOGE", "sSDOGE():(address)", []);
+  sSDAO(): Address {
+    let result = super.call("sSDAO", "sSDAO():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_sSDOGE(): ethereum.CallResult<Address> {
-    let result = super.tryCall("sSDOGE", "sSDOGE():(address)", []);
+  try_sSDAO(): ethereum.CallResult<Address> {
+    let result = super.tryCall("sSDAO", "sSDAO():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -478,11 +478,11 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _sdoge(): Address {
+  get _sdao(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _sSDOGE(): Address {
+  get _sSDAO(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 

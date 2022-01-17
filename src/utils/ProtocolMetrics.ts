@@ -1,6 +1,6 @@
 import { Address, BigDecimal, BigInt, log} from '@graphprotocol/graph-ts'
-import { ScholarDogeToken } from '../../generated/Staking/ScholarDogeToken';
-import { StakedScholarDogeToken } from '../../generated/Staking/StakedScholarDogeToken';
+import { ScholarDAOToken } from '../../generated/Staking/ScholarDAOToken';
+import { StakedScholarDAOToken } from '../../generated/Staking/StakedScholarDAOToken';
 import { CirculatingSupply } from '../../generated/Staking/CirculatingSupply';
 import { BEP20 } from '../../generated/Staking/BEP20';
 import { PancakePair } from '../../generated/Staking/PancakePair';
@@ -10,24 +10,24 @@ import { ProtocolMetric, Transaction } from '../../generated/schema'
 import {
     CIRCULATING_SUPPLY_CONTRACT,
     CIRCULATING_SUPPLY_CONTRACT_BLOCK,
-    BUSD_CONTRACT,
-    SDOGE_CONTRACT,
-    SSDOGE_CONTRACT,
-    SSDOGE_CONTRACT_BLOCK,
+    USDC_CONTRACT,
+    SDAO_CONTRACT,
+    SSDAO_CONTRACT,
+    SSDAO_CONTRACT_BLOCK,
     STAKING_CONTRACT,
     STAKING_CONTRACT_BLOCK,
-    SDOGE_BUSD_PAIR_CONTRACT,
+    SDAO_USDC_PAIR_CONTRACT,
     TREASURY_ADDRESS,
-    WBNB_CONTRACT
+    WFTM_CONTRACT, DAI_CONTRACT
 } from './Constants';
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { 
-    getSDOGEUSDRate,
+    getSDAOUSDRate,
     getDiscountedPairUSD,
     getPairUSD,
-    getBNBUSDRate,
-    getPairWBNB
+    getFTMUSDCRate,
+    getPairWFTM
 } from './Price';
 import { updateBondDiscounts } from './BondDiscounts';
 import {getHolderAux} from "./Aux";
@@ -39,20 +39,20 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
     if (protocolMetric == null) {
         protocolMetric = new ProtocolMetric(dayTimestamp)
         protocolMetric.timestamp = timestamp
-        protocolMetric.sdogeCirculatingSupply = BigDecimal.fromString("0")
-        protocolMetric.ssdogeCirculatingSupply = BigDecimal.fromString("0")
+        protocolMetric.sdaoCirculatingSupply = BigDecimal.fromString("0")
+        protocolMetric.ssdaoCirculatingSupply = BigDecimal.fromString("0")
         protocolMetric.totalSupply = BigDecimal.fromString("0")
-        protocolMetric.sdogePrice = BigDecimal.fromString("0")
+        protocolMetric.sdaoPrice = BigDecimal.fromString("0")
         protocolMetric.marketCap = BigDecimal.fromString("0")
         protocolMetric.totalValueLocked = BigDecimal.fromString("0")
         protocolMetric.treasuryRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMarketValue = BigDecimal.fromString("0")
         protocolMetric.nextEpochRebase = BigDecimal.fromString("0")
-        protocolMetric.nextDistributedSdoge = BigDecimal.fromString("0")
+        protocolMetric.nextDistributedSDAO = BigDecimal.fromString("0")
         protocolMetric.currentAPY = BigDecimal.fromString("0")
-        protocolMetric.treasuryBUSDRiskFreeValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryBUSDMarketValue = BigDecimal.fromString("0")
-        protocolMetric.treasurySDOGEBUSDPOL = BigDecimal.fromString("0")
+        protocolMetric.treasuryUSDCRiskFreeValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryUSDCMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasurySDAOUSDCPOL = BigDecimal.fromString("0")
         protocolMetric.holders = BigInt.fromI32(0)
 
         protocolMetric.save()
@@ -62,8 +62,8 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
 
 
 function getTotalSupply(): BigDecimal{
-    let sdoge_contract = ScholarDogeToken.bind(Address.fromString(SDOGE_CONTRACT))
-    let total_supply = toDecimal(sdoge_contract.totalSupply(), 9)
+    let sdao_contract = ScholarDAOToken.bind(Address.fromString(SDAO_CONTRACT))
+    let total_supply = toDecimal(sdao_contract.totalSupply(), 9)
     log.debug("Total Supply {}", [total_supply.toString()])
     return total_supply
 }
@@ -72,7 +72,7 @@ function getCriculatingSupply(transaction: Transaction, total_supply: BigDecimal
     let circ_supply = BigDecimal.fromString("0")
     if(transaction.blockNumber.gt(BigInt.fromString(CIRCULATING_SUPPLY_CONTRACT_BLOCK))){
         let circulatingsupply_contract = CirculatingSupply.bind(Address.fromString(CIRCULATING_SUPPLY_CONTRACT))
-        circ_supply = toDecimal(circulatingsupply_contract.SDOGECirculatingSupply(), 9)
+        circ_supply = toDecimal(circulatingsupply_contract.SDAOCirculatingSupply(), 9)
     }
     else{
         circ_supply = total_supply;
@@ -81,23 +81,24 @@ function getCriculatingSupply(transaction: Transaction, total_supply: BigDecimal
     return circ_supply
 }
 
-function getSsdogeSupply(transaction: Transaction): BigDecimal{
-    let ssdoge_supply = BigDecimal.fromString("0")
+function getSsdaoSupply(transaction: Transaction): BigDecimal{
+    let ssdao_supply = BigDecimal.fromString("0")
 
-    if(transaction.blockNumber.gt(BigInt.fromString(SSDOGE_CONTRACT_BLOCK))){
-        let ssdoge_contract = StakedScholarDogeToken.bind(Address.fromString(SSDOGE_CONTRACT))
-        ssdoge_supply = ssdoge_supply.plus(toDecimal(ssdoge_contract.circulatingSupply(), 9))
+    if(transaction.blockNumber.gt(BigInt.fromString(SSDAO_CONTRACT_BLOCK))){
+        let ssdao_contract = StakedScholarDAOToken.bind(Address.fromString(SSDAO_CONTRACT))
+        ssdao_supply = ssdao_supply.plus(toDecimal(ssdao_contract.circulatingSupply(), 9))
     }
     
-    log.debug("SSDOGE Supply {}", [ssdoge_supply.toString()])
-    return ssdoge_supply
+    log.debug("SSDAO Supply {}", [ssdao_supply.toString()])
+    return ssdao_supply
 }
 
 function getMV_RFV(transaction: Transaction): BigDecimal[]{
-    let BUSD = BEP20.bind(Address.fromString(BUSD_CONTRACT))
-    let WBNB = BEP20.bind(Address.fromString(WBNB_CONTRACT))
+    let USDC = BEP20.bind(Address.fromString(USDC_CONTRACT))
+    let DAI = BEP20.bind(Address.fromString(DAI_CONTRACT))
+    let WFTM = BEP20.bind(Address.fromString(WFTM_CONTRACT))
 
-    let SDOGEBUSDPair = PancakePair.bind(Address.fromString(SDOGE_BUSD_PAIR_CONTRACT))
+    let SDAOUSDCPair = PancakePair.bind(Address.fromString(SDAO_USDC_PAIR_CONTRACT))
 
     let treasury_address = TREASURY_ADDRESS;
 
@@ -106,51 +107,56 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     //     treasury_address = TREASURY_ADDRESS;
     // }
 
-    let BUSDBalance = BUSD.balanceOf(Address.fromString(treasury_address))
-    let WBNBBalance = WBNB.balanceOf(Address.fromString(treasury_address))
-    let WBNB_value = toDecimal(WBNBBalance, 18).times(getBNBUSDRate())
+    let USDCBalance = USDC.balanceOf(Address.fromString(treasury_address))
+    let DAIBalance = DAI.balanceOf(Address.fromString(treasury_address))
+    let WFTMBalance = WFTM.balanceOf(Address.fromString(treasury_address))
+    let WFTM_value = toDecimal(WFTMBalance, 18).times(getFTMUSDCRate())
 
-    //SDOGEBUSD
-    let SDOGEBUSDBalance = SDOGEBUSDPair.balanceOf(Address.fromString(treasury_address))
-    let SDOGEBUSDTotalLP = toDecimal(SDOGEBUSDPair.totalSupply(), 18)
-    let SDOGEBUSDPOL = toDecimal(SDOGEBUSDBalance, 18).div(SDOGEBUSDTotalLP).times(BigDecimal.fromString("100"))
-    let SDOGEBUSD_value = getPairUSD(SDOGEBUSDBalance, SDOGE_BUSD_PAIR_CONTRACT)
-    let SDOGEBUSD_rfv = getDiscountedPairUSD(SDOGEBUSDBalance, SDOGE_BUSD_PAIR_CONTRACT)
+    //SDAOUSDC
+    let SDAOUSDCBalance = SDAOUSDCPair.balanceOf(Address.fromString(treasury_address))
+    let SDAOUSDCTotalLP = toDecimal(SDAOUSDCPair.totalSupply(), 18)
+    let SDAOUSDCPOL = toDecimal(SDAOUSDCBalance, 18).div(SDAOUSDCTotalLP).times(BigDecimal.fromString("100"))
+    let SDAOUSDC_value = getPairUSD(SDAOUSDCBalance, SDAO_USDC_PAIR_CONTRACT)
+    let SDAOUSDC_rfv = getDiscountedPairUSD(SDAOUSDCBalance, SDAO_USDC_PAIR_CONTRACT)
 
-    let stableValue = BUSDBalance
-    let stableValueDecimal = toDecimal(stableValue, 18)
+    let stableValueDecimal = toDecimal(USDCBalance, 6).plus(toDecimal(DAIBalance, 18))
 
-    let lpValue = SDOGEBUSD_value
-    let rfvLpValue = SDOGEBUSD_rfv
+    let lpValue = SDAOUSDC_value
+    let rfvLpValue = SDAOUSDC_rfv
 
-    let mv = stableValueDecimal.plus(lpValue).plus(WBNB_value)
+    let mv = stableValueDecimal.plus(lpValue).plus(WFTM_value)
     let rfv = stableValueDecimal.plus(rfvLpValue)
 
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
-    log.debug("Treasury BUSD value {}", [toDecimal(BUSDBalance, 18).toString()])
-    log.debug("Treasury WBNB value {}", [WBNB_value.toString()])
-    log.debug("Treasury SDOGE-BUSD RFV {}", [SDOGEBUSD_rfv.toString()])
+    log.debug("Treasury USDC value {}", [toDecimal(USDCBalance, 6).toString()])
+    log.debug("Treasury DAI value {}", [toDecimal(DAIBalance, 18).toString()])
+    log.debug("Treasury WFTM value {}", [WFTM_value.toString()])
+    log.debug("Treasury SDAO-USDC RFV {}", [SDAOUSDC_rfv.toString()])
 
     return [
         mv, 
         rfv,
-        // treasuryDaiRiskFreeValue = BUSD RFV * BUSD
-        SDOGEBUSD_rfv.plus(toDecimal(BUSDBalance, 18)),
-        // treasuryBUSDMarketValue = BUSD LP * BUSD
-        SDOGEBUSD_value.plus(toDecimal(BUSDBalance, 18)),
+        // treasuryUSDCRiskFreeValue = USDC RFV * USDC
+        SDAOUSDC_rfv.plus(toDecimal(USDCBalance, 6)),
+        // treasuryUSDCMarketValue = USDC LP * USDC
+        SDAOUSDC_value.plus(toDecimal(USDCBalance, 6)),
+        // treasuryDAIRiskFreeValue = DAI RFV * DAI
+        SDAOUSDC_rfv.plus(toDecimal(DAIBalance, 18)),
+        // treasuryUSDCMarketValue = DAI LP * DAI
+        SDAOUSDC_value.plus(toDecimal(DAIBalance, 18)),
         // POL
-        SDOGEBUSDPOL
+        SDAOUSDCPOL
     ]
 }
 
-function getNextSDOGERebase(transaction: Transaction): BigDecimal{
+function getNextSDAORebase(transaction: Transaction): BigDecimal{
     let next_distribution = BigDecimal.fromString("0")
 
     if(transaction.blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_BLOCK))){
         let staking_contract = Staking.bind(Address.fromString(STAKING_CONTRACT))
         let distribution = toDecimal(staking_contract.epoch().value3,9)
-        log.debug("next_distribution v2 {}", [distribution.toString()])
+        log.debug("next_distribution {}", [distribution.toString()])
         next_distribution = next_distribution.plus(distribution)
     }
 
@@ -159,8 +165,8 @@ function getNextSDOGERebase(transaction: Transaction): BigDecimal{
     return next_distribution
 }
 
-function getAPY_Rebase(sOHM: BigDecimal, distributedOHM: BigDecimal): BigDecimal[]{
-    let nextEpochRebase = distributedOHM.div(sOHM).times(BigDecimal.fromString("100"));
+function getAPY_Rebase(ssdao: BigDecimal, distributedSDAO: BigDecimal): BigDecimal[]{
+    let nextEpochRebase = distributedSDAO.div(ssdao).times(BigDecimal.fromString("100"));
 
     let nextEpochRebase_number = Number.parseFloat(nextEpochRebase.toString())
     let currentAPY = Math.pow(((nextEpochRebase_number/100)+1), (365*3)-1)*100
@@ -180,31 +186,33 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.totalSupply = getTotalSupply()
 
     //Circ Supply
-    pm.sdogeCirculatingSupply = getCriculatingSupply(transaction, pm.totalSupply)
+    pm.sdaoCirculatingSupply = getCriculatingSupply(transaction, pm.totalSupply)
 
-    //SSDOGE Supply
-    pm.ssdogeCirculatingSupply = getSsdogeSupply(transaction)
+    //SSDAO Supply
+    pm.ssdaoCirculatingSupply = getSsdaoSupply(transaction)
 
-    //SDOGE Price
-    pm.sdogePrice = getSDOGEUSDRate()
+    //SDAO Price
+    pm.sdaoPrice = getSDAOUSDRate()
 
-    //SDOGE Market Cap
-    pm.marketCap = pm.sdogeCirculatingSupply.times(pm.sdogePrice)
+    //SDAO Market Cap
+    pm.marketCap = pm.sdaoCirculatingSupply.times(pm.sdaoPrice)
 
     //Total Value Locked
-    pm.totalValueLocked = pm.ssdogeCirculatingSupply.times(pm.sdogePrice)
+    pm.totalValueLocked = pm.ssdaoCirculatingSupply.times(pm.sdaoPrice)
 
     //Treasury RFV and MV
     let mv_rfv = getMV_RFV(transaction)
     pm.treasuryMarketValue = mv_rfv[0]
     pm.treasuryRiskFreeValue = mv_rfv[1]
-    pm.treasuryBUSDRiskFreeValue = mv_rfv[2]
-    pm.treasuryBUSDMarketValue = mv_rfv[3]
-    pm.treasurySDOGEBUSDPOL = mv_rfv[4]
+    pm.treasuryUSDCRiskFreeValue = mv_rfv[2]
+    pm.treasuryUSDCMarketValue = mv_rfv[3]
+    pm.treasuryDAIRiskFreeValue = mv_rfv[4]
+    pm.treasuryDAIMarketValue = mv_rfv[5]
+    pm.treasurySDAOUSDCPOL = mv_rfv[6]
 
     // Rebase rewards, APY, rebase
-    pm.nextDistributedSdoge = getNextSDOGERebase(transaction)
-    let apy_rebase = getAPY_Rebase(pm.ssdogeCirculatingSupply, pm.nextDistributedSdoge)
+    pm.nextDistributedSDAO = getNextSDAORebase(transaction)
+    let apy_rebase = getAPY_Rebase(pm.ssdaoCirculatingSupply, pm.nextDistributedSDAO)
     pm.currentAPY = apy_rebase[0]
     pm.nextEpochRebase = apy_rebase[1]
 

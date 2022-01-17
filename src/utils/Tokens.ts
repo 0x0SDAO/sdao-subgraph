@@ -8,4 +8,3 @@ export function loadOrCreateToken(name: string): Token{
     }
     return token as Token
 }
-

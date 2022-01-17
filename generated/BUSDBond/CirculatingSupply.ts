@@ -15,14 +15,14 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return new CirculatingSupply("CirculatingSupply", address);
   }
 
-  SDOGE(): Address {
-    let result = super.call("SDOGE", "SDOGE():(address)", []);
+  SDAO(): Address {
+    let result = super.call("SDAO", "SDAO():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_SDOGE(): ethereum.CallResult<Address> {
-    let result = super.tryCall("SDOGE", "SDOGE():(address)", []);
+  try_SDAO(): ethereum.CallResult<Address> {
+    let result = super.tryCall("SDAO", "SDAO():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -30,20 +30,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  SDOGECirculatingSupply(): BigInt {
+  SDAOCirculatingSupply(): BigInt {
     let result = super.call(
-      "SDOGECirculatingSupply",
-      "SDOGECirculatingSupply():(uint256)",
+      "SDAOCirculatingSupply",
+      "SDAOCirculatingSupply():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_SDOGECirculatingSupply(): ethereum.CallResult<BigInt> {
+  try_SDAOCirculatingSupply(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "SDOGECirculatingSupply",
-      "SDOGECirculatingSupply():(uint256)",
+      "SDAOCirculatingSupply",
+      "SDAOCirculatingSupply():(uint256)",
       []
     );
     if (result.reverted) {
@@ -53,20 +53,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getNonCirculatingSDOGE(): BigInt {
+  getNonCirculatingSDAO(): BigInt {
     let result = super.call(
-      "getNonCirculatingSDOGE",
-      "getNonCirculatingSDOGE():(uint256)",
+      "getNonCirculatingSDAO",
+      "getNonCirculatingSDAO():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_getNonCirculatingSDOGE(): ethereum.CallResult<BigInt> {
+  try_getNonCirculatingSDAO(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getNonCirculatingSDOGE",
-      "getNonCirculatingSDOGE():(uint256)",
+      "getNonCirculatingSDAO",
+      "getNonCirculatingSDAO():(uint256)",
       []
     );
     if (result.reverted) {
@@ -76,17 +76,17 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  initialize(_sdoge: Address): boolean {
+  initialize(_sdao: Address): boolean {
     let result = super.call("initialize", "initialize(address):(bool)", [
-      ethereum.Value.fromAddress(_sdoge)
+      ethereum.Value.fromAddress(_sdao)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_initialize(_sdoge: Address): ethereum.CallResult<boolean> {
+  try_initialize(_sdao: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("initialize", "initialize(address):(bool)", [
-      ethereum.Value.fromAddress(_sdoge)
+      ethereum.Value.fromAddress(_sdao)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -110,22 +110,22 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  nonCirculatingSDOGEAddresses(param0: BigInt): Address {
+  nonCirculatingSDAOAddresses(param0: BigInt): Address {
     let result = super.call(
-      "nonCirculatingSDOGEAddresses",
-      "nonCirculatingSDOGEAddresses(uint256):(address)",
+      "nonCirculatingSDAOAddresses",
+      "nonCirculatingSDAOAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
     return result[0].toAddress();
   }
 
-  try_nonCirculatingSDOGEAddresses(
+  try_nonCirculatingSDAOAddresses(
     param0: BigInt
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "nonCirculatingSDOGEAddresses",
-      "nonCirculatingSDOGEAddresses(uint256):(address)",
+      "nonCirculatingSDAOAddresses",
+      "nonCirculatingSDAOAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -150,24 +150,24 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  setNonCirculatingSDOGEAddresses(
+  setNonCirculatingSDAOAddresses(
     _nonCirculatingAddresses: Array<Address>
   ): boolean {
     let result = super.call(
-      "setNonCirculatingSDOGEAddresses",
-      "setNonCirculatingSDOGEAddresses(address[]):(bool)",
+      "setNonCirculatingSDAOAddresses",
+      "setNonCirculatingSDAOAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
 
     return result[0].toBoolean();
   }
 
-  try_setNonCirculatingSDOGEAddresses(
+  try_setNonCirculatingSDAOAddresses(
     _nonCirculatingAddresses: Array<Address>
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "setNonCirculatingSDOGEAddresses",
-      "setNonCirculatingSDOGEAddresses(address[]):(bool)",
+      "setNonCirculatingSDAOAddresses",
+      "setNonCirculatingSDAOAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
     if (result.reverted) {
@@ -248,7 +248,7 @@ export class InitializeCall__Inputs {
     this._call = call;
   }
 
-  get _sdoge(): Address {
+  get _sdao(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
@@ -265,20 +265,20 @@ export class InitializeCall__Outputs {
   }
 }
 
-export class SetNonCirculatingSDOGEAddressesCall extends ethereum.Call {
-  get inputs(): SetNonCirculatingSDOGEAddressesCall__Inputs {
-    return new SetNonCirculatingSDOGEAddressesCall__Inputs(this);
+export class SetNonCirculatingSDAOAddressesCall extends ethereum.Call {
+  get inputs(): SetNonCirculatingSDAOAddressesCall__Inputs {
+    return new SetNonCirculatingSDAOAddressesCall__Inputs(this);
   }
 
-  get outputs(): SetNonCirculatingSDOGEAddressesCall__Outputs {
-    return new SetNonCirculatingSDOGEAddressesCall__Outputs(this);
+  get outputs(): SetNonCirculatingSDAOAddressesCall__Outputs {
+    return new SetNonCirculatingSDAOAddressesCall__Outputs(this);
   }
 }
 
-export class SetNonCirculatingSDOGEAddressesCall__Inputs {
-  _call: SetNonCirculatingSDOGEAddressesCall;
+export class SetNonCirculatingSDAOAddressesCall__Inputs {
+  _call: SetNonCirculatingSDAOAddressesCall;
 
-  constructor(call: SetNonCirculatingSDOGEAddressesCall) {
+  constructor(call: SetNonCirculatingSDAOAddressesCall) {
     this._call = call;
   }
 
@@ -287,10 +287,10 @@ export class SetNonCirculatingSDOGEAddressesCall__Inputs {
   }
 }
 
-export class SetNonCirculatingSDOGEAddressesCall__Outputs {
-  _call: SetNonCirculatingSDOGEAddressesCall;
+export class SetNonCirculatingSDAOAddressesCall__Outputs {
+  _call: SetNonCirculatingSDAOAddressesCall;
 
-  constructor(call: SetNonCirculatingSDOGEAddressesCall) {
+  constructor(call: SetNonCirculatingSDAOAddressesCall) {
     this._call = call;
   }
 

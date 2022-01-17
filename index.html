@@ -39,9 +39,9 @@
         type:'POST',
         data: JSON.stringify({
             query:`{
-                sdogeieBalances(where: {sdogeie: "`+address+`"}, orderBy: timestamp, orderDirection:asc) {
-                    sdogeBalance
-                    ssdogeBalance
+                sdaoieBalances(where: {sdaoie: "`+address+`"}, orderBy: timestamp, orderDirection:asc) {
+                    sdaoBalance
+                    ssdaoBalance
                     timestamp
                     dollarBalance
                 }
@@ -49,36 +49,36 @@
         }),
         success: function(result) {
             console.log(result);
-            var timestamps = $.map( result.data.sdogeieBalances , function( n ) {
+            var timestamps = $.map( result.data.sdaoieBalances , function( n ) {
                 var d = new Date(0);
                 d.setUTCSeconds(n.timestamp);
                 var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
                 return datestring;
             });
-            var sdogeBalances = $.map( result.data.sdogeieBalances , function( n ) {
-                return n.sdogeBalance;
+            var sdaoBalances = $.map( result.data.sdaoieBalances , function( n ) {
+                return n.sdaoBalance;
             });
-            var ssdogeBalances = $.map( result.data.sdogeieBalances , function( n ) {
-                return n.ssdogeBalance;
+            var ssdaoBalances = $.map( result.data.sdaoieBalances , function( n ) {
+                return n.ssdaoBalance;
             });
-            var dollarBalances = $.map( result.data.sdogeieBalances , function( n ) {
+            var dollarBalances = $.map( result.data.sdaoieBalances , function( n ) {
                 return n.dollarBalance;
             });
 
-            var sdogeChart = new Chart(historyChart, {
+            var sdaoChart = new Chart(historyChart, {
                 type: 'line',
                 data: {
                     labels: timestamps,
                     datasets: [{
-                        label: 'SDOGE Balance',
+                        label: 'SDAO Balance',
                         borderColor: 'rgb(75, 192, 192)',
-                        data: sdogeBalances,
+                        data: sdaoBalances,
                         tension: 0.1
                     },
                     {
-                        label: 'SSDOGE Balance',
+                        label: 'SSDAO Balance',
                         borderColor: 'rgb(192, 192, 75)',
-                        data: ssdogeBalances,
+                        data: ssdaoBalances,
                         tension: 0.1
                     }]
                 }

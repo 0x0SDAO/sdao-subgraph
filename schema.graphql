@@ -6,22 +6,22 @@ type DailyBond @entity {
   value: BigDecimal!
 }
 
-type SDOGEie @entity {
+type SDAOie @entity {
   id: ID!
-  bondDeposits: [Deposit!]! @derivedFrom(field: "sdogeie")
-  bondRedemptions: [Redemption!]! @derivedFrom(field: "sdogeie")
-  stakeTransactions: [Stake!]! @derivedFrom(field: "sdogeie")
-  unstakeTransactions: [Unstake!]! @derivedFrom(field: "sdogeie")
-  historicBalance: [SDOGEieBalance!]! @derivedFrom(field: "sdogeie")
-  lastBalance: SDOGEieBalance
+  bondDeposits: [Deposit!]! @derivedFrom(field: "sdaoie")
+  bondRedemptions: [Redemption!]! @derivedFrom(field: "sdaoie")
+  stakeTransactions: [Stake!]! @derivedFrom(field: "sdaoie")
+  unstakeTransactions: [Unstake!]! @derivedFrom(field: "sdaoie")
+  historicBalance: [SDAOieBalance!]! @derivedFrom(field: "sdaoie")
+  lastBalance: SDAOieBalance
   active: Boolean!
 }
 
-type SDOGEieBalance @entity {
+type SDAOieBalance @entity {
   id: ID!
-  sdogeie: SDOGEie!
-  ssdogeBalance: BigDecimal!
-  sdogeBalance: BigDecimal!
+  sdaoie: SDAOie!
+  ssdaoBalance: BigDecimal!
+  sdaoBalance: BigDecimal!
   bondBalance: BigDecimal!
   dollarBalance: BigDecimal!
   stakes: [ContractInfo!]
@@ -32,7 +32,7 @@ type SDOGEieBalance @entity {
 type Deposit @entity {
   id: ID!
   transaction: Transaction!
-  sdogeie: SDOGEie!
+  sdaoie: SDAOie!
   amount: BigDecimal!
   maxPremium: BigDecimal!
   token: Token!
@@ -43,7 +43,7 @@ type Deposit @entity {
 type Redemption @entity {
   id: ID!
   transaction: Transaction
-  sdogeie: SDOGEie
+  sdaoie: SDAOie
   token: Token
   timestamp: BigInt
 }
@@ -51,7 +51,7 @@ type Redemption @entity {
 type Stake @entity {
   id: ID!
   transaction: Transaction!
-  sdogeie: SDOGEie!
+  sdaoie: SDAOie!
   amount: BigDecimal!
   timestamp: BigInt!
 }
@@ -59,7 +59,7 @@ type Stake @entity {
 type Unstake @entity {
   id: ID!
   transaction: Transaction!
-  sdogeie: SDOGEie!
+  sdaoie: SDAOie!
   amount: BigDecimal!
   timestamp: BigInt!
 }
@@ -68,7 +68,7 @@ type Rebase @entity {
   id: ID!
   transaction: String!
   amount: BigDecimal!
-  stakedSDOGEs: BigDecimal!
+  stakedSDAOs: BigDecimal!
   percentage: BigDecimal!
   contract: String!
   timestamp: BigInt!
@@ -101,19 +101,21 @@ type Token @entity {
 type ProtocolMetric @entity {
   id: ID!
   timestamp: BigInt!
-  sdogeCirculatingSupply: BigDecimal!
-  ssdogeCirculatingSupply: BigDecimal!
+  sdaoCirculatingSupply: BigDecimal!
+  ssdaoCirculatingSupply: BigDecimal!
   totalSupply: BigDecimal!
-  sdogePrice: BigDecimal!
+  sdaoPrice: BigDecimal!
   marketCap: BigDecimal!
   totalValueLocked: BigDecimal!
   treasuryRiskFreeValue: BigDecimal!
   treasuryMarketValue: BigDecimal!
   nextEpochRebase: BigDecimal!
-  nextDistributedSdoge: BigDecimal!
-  treasuryBUSDRiskFreeValue: BigDecimal!
-  treasuryBUSDMarketValue: BigDecimal!
-  treasurySDOGEBUSDPOL: BigDecimal!
+  nextDistributedSDAO: BigDecimal!
+  treasuryUSDCRiskFreeValue: BigDecimal!
+  treasuryUSDCMarketValue: BigDecimal!
+  treasuryDAIRiskFreeValue: BigDecimal!
+  treasuryDAIMarketValue: BigDecimal!
+  treasurySDAOUSDCPOL: BigDecimal!
   currentAPY: BigDecimal!
   holders: BigInt!
 }
@@ -133,7 +135,8 @@ type Aux @entity {
 type BondDiscount @entity {
   id: ID!
   timestamp: BigInt!
-  busd_discount: BigDecimal!
-  sdogebusd_discount: BigDecimal!
-  wbnb_discount: BigDecimal!
+  usdc_discount: BigDecimal!
+  dai_discount: BigDecimal!
+  sdaousdc_discount: BigDecimal!
+  wftm_discount: BigDecimal!
 }

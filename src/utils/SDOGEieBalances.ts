@@ -1,23 +1,21 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
-import { SDOGEie, SDOGEieBalance } from '../../generated/schema'
-import { dayFromTimestamp } from './Dates';
+import { SDAOie, SDAOieBalance } from '../../generated/schema'
 
-export function loadOrCreateSDOGEieBalance(sdogeie: SDOGEie, timestamp: BigInt): SDOGEieBalance{
-    let id = timestamp.toString()+sdogeie.id
+export function loadOrCreateSDAOieBalance(sdaoie: SDAOie, timestamp: BigInt): SDAOieBalance{
+    let id = timestamp.toString()+sdaoie.id
 
-    let sdogeieBalance = SDOGEieBalance.load(id)
-    if (sdogeieBalance == null) {
-        sdogeieBalance = new SDOGEieBalance(id)
-        sdogeieBalance.sdogeie = sdogeie.id
-        sdogeieBalance.timestamp = timestamp
-        sdogeieBalance.ssdogeBalance = BigDecimal.fromString("0")
-        sdogeieBalance.sdogeBalance = BigDecimal.fromString("0")
-        sdogeieBalance.bondBalance = BigDecimal.fromString("0")
-        sdogeieBalance.dollarBalance = BigDecimal.fromString("0")
-        sdogeieBalance.stakes = []
-        sdogeieBalance.bonds = []
-        sdogeieBalance.save()
+    let sdaoieBalance = SDAOieBalance.load(id)
+    if (sdaoieBalance == null) {
+        sdaoieBalance = new SDAOieBalance(id)
+        sdaoieBalance.sdaoie = sdaoie.id
+        sdaoieBalance.timestamp = timestamp
+        sdaoieBalance.ssdaoBalance = BigDecimal.fromString("0")
+        sdaoieBalance.sdaoBalance = BigDecimal.fromString("0")
+        sdaoieBalance.bondBalance = BigDecimal.fromString("0")
+        sdaoieBalance.dollarBalance = BigDecimal.fromString("0")
+        sdaoieBalance.stakes = []
+        sdaoieBalance.bonds = []
+        sdaoieBalance.save()
     }
-    return sdogeieBalance as SDOGEieBalance
+    return sdaoieBalance as SDAOieBalance
 }
-

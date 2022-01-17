@@ -1,196 +1,249 @@
-# Replace with mainnet values
+# Replace with ftm mainnet values / addrs
 specVersion: 0.0.2
-description: ScholarDoge Subgraph
-repository: https://github.com/ScholarDoge/sdoge-subgraph
+description: ScholarDAO Subgraph
+repository: https://github.com/ScholarDAO/sdao-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   #Staking Contract
   - kind: ethereum/contract
     name: Staking
-    network: bsc
+    network: fantom
     source:
-      address: '0x5BF599A3c8168298d9c8c4452131238AD338D3B1'
+      address: '0x0000000000000000000000000000000000000000'
       abi: Staking
-#      startBlock: 15798912
+      startBlock: 15798912
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Staking
       abis:
         - name: Staking
           file: ./abis/Staking.json
-        - name: StakedScholarDogeToken
-          file: ./abis/StakedScholarDogeToken.json
-        - name: ScholarDogeToken
-          file: ./abis/ScholarDogeToken.json
-        - name: PancakePair
-          file: ./abis/libraries/PancakePair.json
-        - name: BUSDBond
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: USDCBond
           file: ./abis/BondDepository.json
-        - name: SDOGEBUSDBond
+        - name: DAIBond
           file: ./abis/BondDepository.json
-        - name: WBNBBond
-          file: ./abis/BondDepositoryWBNB.json
+        - name: DAIBond
+          file: ./abis/BondDepository.json
+        - name: SDAOUSDCBond
+          file: ./abis/BondDepository.json
+        - name: WFTMBond
+          file: ./abis/BondDepositoryWFTM.json
         - name: CirculatingSupply
-          file: ./abis/ScholarDogeCirculatingSupply.json
+          file: ./abis/ScholarDAOCirculatingSupply.json
         - name: BondingCalculator
           file: ./abis/BondingCalculator.json
-        - name: BEP20
-          file: ./abis/libraries/BEP20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: stake(address,uint256,bool)
           handler: handleStake
         - function: unstake(address,uint256,bool)
           handler: handleUnstake
       file: ./src/Staking.ts
-  #BUSD Bond
+  #USDC Bond
   - kind: ethereum/contract
-    name: BUSDBond
-    network: bsc
+    name: USDCBond
+    network: fantom
     source:
-      address: '0x9C086C0e5d5C059ec4feD8dD19B20EEB613bBC74'
-      abi: BUSDBond
-#      startBlock: 15798912
+      address: '0x0000000000000000000000000000000000000000'
+      abi: USDCBond
+      startBlock: 15798912
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - BUSDBond
+        - USDCBond
       abis:
         - name: Staking
           file: ./abis/Staking.json
-        - name: StakedScholarDogeToken
-          file: ./abis/StakedScholarDogeToken.json
-        - name: ScholarDogeToken
-          file: ./abis/ScholarDogeToken.json
-        - name: PancakePair
-          file: ./abis/libraries/PancakePair.json
-        - name: BUSDBond
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: USDCBond
           file: ./abis/BondDepository.json
-        - name: SDOGEBUSDBond
+        - name: DAIBond
           file: ./abis/BondDepository.json
-        - name: WBNBBond
-          file: ./abis/BondDepositoryWBNB.json
+        - name: SDAOUSDCBond
+          file: ./abis/BondDepository.json
+        - name: WFTMBond
+          file: ./abis/BondDepositoryWFTM.json
         - name: CirculatingSupply
-          file: ./abis/ScholarDogeCirculatingSupply.json
+          file: ./abis/ScholarDAOCirculatingSupply.json
         - name: BondingCalculator
           file: ./abis/BondingCalculator.json
-        - name: BEP20
-          file: ./abis/libraries/BEP20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
         - function: redeem(address,bool)
           handler: handleRedeem
-      file: ./src/BUSDBond.ts
-  #SDOGE-BUSD Bond
+      file: ./src/USDCBond.ts
+  #DAI Bond
   - kind: ethereum/contract
-    name: SDOGEBUSDBond
-    network: bsc
+    name: DAIBond
+    network: fantom
     source:
-      address: '0xacdd2c6d14753D87929a3C16D6729b0A4Da4F14B'
-      abi: SDOGEBUSDBond
-#      startBlock: 15798912
+      address: '0x0000000000000000000000000000000000000000'
+      abi: DAIBond
+      startBlock: 15798912
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - BUSDBond
+        - DAIBond
       abis:
         - name: Staking
           file: ./abis/Staking.json
-        - name: StakedScholarDogeToken
-          file: ./abis/StakedScholarDogeToken.json
-        - name: ScholarDogeToken
-          file: ./abis/ScholarDogeToken.json
-        - name: PancakePair
-          file: ./abis/libraries/PancakePair.json
-        - name: BUSDBond
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: USDCBond
           file: ./abis/BondDepository.json
-        - name: SDOGEBUSDBond
+        - name: DAIBond
           file: ./abis/BondDepository.json
-        - name: WBNBBond
-          file: ./abis/BondDepositoryWBNB.json
+        - name: SDAOUSDCBond
+          file: ./abis/BondDepository.json
+        - name: WFTMBond
+          file: ./abis/BondDepositoryWFTM.json
         - name: CirculatingSupply
-          file: ./abis/ScholarDogeCirculatingSupply.json
+          file: ./abis/ScholarDAOCirculatingSupply.json
         - name: BondingCalculator
           file: ./abis/BondingCalculator.json
-        - name: BEP20
-          file: ./abis/libraries/BEP20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
         - function: redeem(address,bool)
           handler: handleRedeem
-      file: ./src/SDOGEBUSDBond.ts
-  #WBNB Bond
+      file: ./src/DAIBond.ts
+  #SDAO-USDC Bond
   - kind: ethereum/contract
-    name: WBNBBond
-    network: bsc
+    name: SDAOUSDCBond
+    network: fantom
     source:
-      address: '0x1Ba47279fd3426e9310F8bBbff042B338bB9DE85'
-      abi: WBNBBond
-#      startBlock: 15798912
+      address: '0x0000000000000000000000000000000000000000'
+      abi: SDAOUSDCBond
+      startBlock: 15798912
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - WBNBBond
+        - USDCBond
       abis:
         - name: Staking
           file: ./abis/Staking.json
-        - name: StakedScholarDogeToken
-          file: ./abis/StakedScholarDogeToken.json
-        - name: ScholarDogeToken
-          file: ./abis/ScholarDogeToken.json
-        - name: PancakePair
-          file: ./abis/libraries/PancakePair.json
-        - name: BUSDBond
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: USDCBond
           file: ./abis/BondDepository.json
-        - name: SDOGEBUSDBond
+        - name: DAIBond
           file: ./abis/BondDepository.json
-        - name: WBNBBond
-          file: ./abis/BondDepositoryWBNB.json
+        - name: SDAOUSDCBond
+          file: ./abis/BondDepository.json
+        - name: WFTMBond
+          file: ./abis/BondDepositoryWFTM.json
         - name: CirculatingSupply
-          file: ./abis/ScholarDogeCirculatingSupply.json
+          file: ./abis/ScholarDAOCirculatingSupply.json
         - name: BondingCalculator
           file: ./abis/BondingCalculator.json
-        - name: BEP20
-          file: ./abis/libraries/BEP20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
         - function: redeem(address,bool)
           handler: handleRedeem
-      file: ./src/WBNBBond.ts
-  #SSDOGE
+      file: ./src/SDAOUSDCBond.ts
+  #WFTM Bond
   - kind: ethereum/contract
-    name: StakedScholarDogeToken
-    network: bsc
+    name: WFTMBond
+    network: fantom
     source:
-      address: '0x4c7f33Bcc0f8fb31CA4059FA501e8aE34bc5Cf33'
-      abi: StakedScholarDogeToken
-#      startBlock: 15798912
+      address: '0x0000000000000000000000000000000000000000'
+      abi: WFTMBond
+      startBlock: 15798912
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - StakedScholarDogeToken
+        - WFTMBond
       abis:
-        - name: StakedScholarDogeToken
-          file: ./abis/StakedScholarDogeToken.json
-        - name: ScholarDogeToken
-          file: ./abis/ScholarDogeToken.json
-        - name: PancakePairPair
-          file: ./abis/libraries/PancakePair.json
+        - name: Staking
+          file: ./abis/Staking.json
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: USDCBond
+          file: ./abis/BondDepository.json
+        - name: DAIBond
+          file: ./abis/BondDepository.json
+        - name: SDAOUSDCBond
+          file: ./abis/BondDepository.json
+        - name: WFTMBond
+          file: ./abis/BondDepositoryWFTM.json
+        - name: CirculatingSupply
+          file: ./abis/ScholarDAOCirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(address,bool)
+          handler: handleRedeem
+      file: ./src/WFTMBond.ts
+  #SSDAO
+  - kind: ethereum/contract
+    name: StakedScholarDAOToken
+    network: fantom
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: StakedScholarDAOToken
+      startBlock: 15798912
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - StakedScholarDAOToken
+      abis:
+        - name: StakedScholarDAOToken
+          file: ./abis/StakedScholarDAOToken.json
+        - name: ScholarDAOToken
+          file: ./abis/ScholarDAOToken.json
+        - name: UniswapV2PairPair
+          file: ./abis/UniswapV2Pair.json
       callHandlers:
         - function: rebase(uint256,uint256)
           handler: rebaseFunction
-      file: ./src/StakedScholarDogeToken.ts
+      file: ./src/StakedScholarDAOToken.ts
