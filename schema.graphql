@@ -111,11 +111,9 @@ type ProtocolMetric @entity {
   treasuryMarketValue: BigDecimal!
   nextEpochRebase: BigDecimal!
   nextDistributedSDAO: BigDecimal!
-  treasuryUSDCRiskFreeValue: BigDecimal!
-  treasuryUSDCMarketValue: BigDecimal!
   treasuryDAIRiskFreeValue: BigDecimal!
   treasuryDAIMarketValue: BigDecimal!
-  treasurySDAOUSDCPOL: BigDecimal!
+  treasurySDAODAIPOL: BigDecimal!
   currentAPY: BigDecimal!
   holders: BigInt!
 }
@@ -135,8 +133,7 @@ type Aux @entity {
 type BondDiscount @entity {
   id: ID!
   timestamp: BigInt!
-  usdc_discount: BigDecimal!
   dai_discount: BigDecimal!
-  sdaousdc_discount: BigDecimal!
+  sdaodai_discount: BigDecimal!
   wftm_discount: BigDecimal!
 }

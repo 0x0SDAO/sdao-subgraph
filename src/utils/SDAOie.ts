@@ -1,16 +1,14 @@
 import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts'
 import { SDAOie, Transaction } from '../../generated/schema'
-import { ScholarDAOToken } from '../../generated/USDCBond/ScholarDAOToken'
-import { StakedScholarDAOToken } from '../../generated/USDCBond/StakedScholarDAOToken'
-import { USDCBond } from '../../generated/USDCBond/USDCBond'
-import { SDAOUSDCBond } from '../../generated/USDCBond/SDAOUSDCBond'
-import { WFTMBond } from '../../generated/USDCBond/WFTMBond'
+import { ScholarDAOToken } from '../../generated/DAIBond/ScholarDAOToken'
+import { StakedScholarDAOToken } from '../../generated/DAIBond/StakedScholarDAOToken'
+import { DAIBond } from '../../generated/DAIBond/DAIBond'
+import { SDAODAIBond } from '../../generated/DAIBond/SDAODAIBond'
+import { WFTMBond } from '../../generated/DAIBond/WFTMBond'
 
 import {
-    USDCBOND_CONTRACT,
-    USDCBOND_CONTRACT_BLOCK,
-    SDAOUSDCBOND_CONTRACT,
-    SDAOUSDCBOND_CONTRACT_BLOCK,
+    SDAODAIBOND_CONTRACT,
+    SDAODAIBOND_CONTRACT_BLOCK,
     WFTMBOND_CONTRACT,
     WFTMBOND_CONTRACT_BLOCK,
     SDAO_CONTRACT,
@@ -18,10 +16,10 @@ import {
     SSDAO_CONTRACT_BLOCK,
     DAIBOND_CONTRACT_BLOCK,
     DAIBOND_CONTRACT
-} from '../utils/Constants'
-import { loadOrCreateSDAOieBalance } from './SDAOieBalances'
+} from './Constants'
+import { loadOrCreateSDAOieBalance } from './SDOGEieBalances'
 import { toDecimal } from './Decimals'
-import { getSDAOUSDRate } from './Price'
+import { getSDAODAIRate } from './Price'
 import { loadOrCreateContractInfo } from './ContractInfo'
 import { getHolderAux } from './Aux'
 
@@ -73,41 +71,23 @@ export function updateSDAOieBalance(sdaoie: SDAOie, transaction: Transaction): v
         sdaoie.active = true
     }
 
-    //SDAO-USDC
+    //SDAO-DAI
     let bonds = balance.bonds
-    if(transaction.blockNumber.gt(BigInt.fromString(SDAOUSDCBOND_CONTRACT_BLOCK))){
-        let bondSDAOUSDC_contract = SDAOUSDCBond.bind(Address.fromString(SDAOUSDCBOND_CONTRACT))
-        let pending = bondSDAOUSDC_contract.bondInfo(Address.fromString(sdaoie.id))
+    if(transaction.blockNumber.gt(BigInt.fromString(SDAODAIBOND_CONTRACT_BLOCK))){
+        let bondSDAODAI_contract = SDAODAIBond.bind(Address.fromString(SDAODAIBOND_CONTRACT))
+        let pending = bondSDAODAI_contract.bondInfo(Address.fromString(sdaoie.id))
         if (pending.value1.gt(BigInt.fromString("0"))){
             let pending_bond = toDecimal(pending.value1, 9)
             balance.bondBalance = balance.bondBalance.plus(pending_bond)
 
-            let binfo = loadOrCreateContractInfo(sdaoie.id + transaction.timestamp.toString() + "SDAOUSDCBond")
-            binfo.name = "SDAO-USDC"
-            binfo.contract = SDAOUSDCBOND_CONTRACT
+            let binfo = loadOrCreateContractInfo(sdaoie.id + transaction.timestamp.toString() + "SDAODAIBond")
+            binfo.name = "SDAO-DAI"
+            binfo.contract = SDAODAIBOND_CONTRACT
             binfo.amount = pending_bond
             binfo.save()
             bonds.push(binfo.id)
 
-            log.debug("SDAOie {} pending SDAOUSDCBond {} on tx {}", [sdaoie.id, toDecimal(pending.value1, 9).toString(), transaction.id])
-        }
-    }
-    //USDC
-    if(transaction.blockNumber.gt(BigInt.fromString(USDCBOND_CONTRACT_BLOCK))){
-        let bondUSDC_contract = USDCBond.bind(Address.fromString(USDCBOND_CONTRACT))
-        let pending = bondUSDC_contract.bondInfo(Address.fromString(sdaoie.id))
-        if (pending.value1.gt(BigInt.fromString("0"))){
-            let pending_bond = toDecimal(pending.value1, 9)
-            balance.bondBalance = balance.bondBalance.plus(pending_bond)
-
-            let binfo = loadOrCreateContractInfo(sdaoie.id + transaction.timestamp.toString() + "USDCBond")
-            binfo.name = "USDC"
-            binfo.contract = USDCBOND_CONTRACT
-            binfo.amount = pending_bond
-            binfo.save()
-            bonds.push(binfo.id)
-
-            log.debug("SDAOie {} pending USDCBond {} on tx {}", [sdaoie.id, toDecimal(pending.value1, 9).toString(), transaction.id])
+            log.debug("SDAOie {} pending SDAODAIBond {} on tx {}", [sdaoie.id, toDecimal(pending.value1, 9).toString(), transaction.id])
         }
     }
     //DAI
@@ -149,7 +129,7 @@ export function updateSDAOieBalance(sdaoie: SDAOie, transaction: Transaction): v
     balance.bonds = bonds
 
     //Price
-    let usdRate = getSDAOUSDRate()
+    let usdRate = getSDAODAIRate()
     balance.dollarBalance = balance.sdaoBalance.times(usdRate).plus(balance.ssdaoBalance.times(usdRate)).plus(balance.bondBalance.times(usdRate))
     balance.save()
 

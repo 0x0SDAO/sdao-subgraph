@@ -6,7 +6,7 @@ import { Rebase } from '../generated/schema'
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
 import { SDAO_CONTRACT, STAKING_CONTRACT } from './utils/Constants'
 import { toDecimal } from './utils/Decimals'
-import { getSDAOUSDRate } from './utils/Price';
+import { getSDAODAIRate } from './utils/Price';
 
 export function rebaseFunction(call: RebaseCall): void {
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
@@ -23,7 +23,7 @@ export function rebaseFunction(call: RebaseCall): void {
         rebase.percentage = rebase.amount.div(rebase.stakedSDAOs)
         rebase.transaction = transaction.id
         rebase.timestamp = transaction.timestamp
-        rebase.value = rebase.amount.times(getSDAOUSDRate())
+        rebase.value = rebase.amount.times(getSDAODAIRate())
         rebase.save()
 
         createDailyStakingReward(rebase.timestamp, rebase.amount)

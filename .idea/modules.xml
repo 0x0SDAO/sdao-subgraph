@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sdoge-subgraph.iml" filepath="$PROJECT_DIR$/.idea/sdoge-subgraph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sdao-subgraph.iml" filepath="$PROJECT_DIR$/.idea/sdao-subgraph.iml" />
     </modules>
   </component>
 </project>

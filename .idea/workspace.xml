@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="640e955f-9174-44e9-be40-43968c953e68" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sdao-subgraph.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sdao-subgraph.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/BEP20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/BUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/BondingCalculator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/CirculatingSupply.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/PancakePair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/SDOGEBUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/ScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/StakedScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/Staking.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/BUSDBond/WBNBBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/DAIBond/SDAOUSDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/DAIBond/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/BondingCalculator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/CirculatingSupply.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/DAIBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/ERC20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/SDAOUSDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/ScholarDAOToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/StakedScholarDAOToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/Staking.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/UniswapV2Pair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDAOUSDCBond/WFTMBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/BEP20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/BUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/BondingCalculator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/CirculatingSupply.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/PancakePair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/SDOGEBUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/ScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/StakedScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/Staking.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/SDOGEBUSDBond/WBNBBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/StakedScholarDogeToken/PancakePairPair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/StakedScholarDogeToken/ScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/StakedScholarDogeToken/StakedScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/BEP20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/BUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/MasterChef.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/PancakePair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/SDAOUSDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/SDOGEBUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/ScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/StakedScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/Staking/WBNBBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/BondingCalculator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/CirculatingSupply.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/DAIBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/ERC20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/SDAOUSDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/ScholarDAOToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/StakedScholarDAOToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/Staking.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/UniswapV2Pair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/USDCBond/WFTMBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/BEP20.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/BUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/BondingCalculator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/CirculatingSupply.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/PancakePair.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/SDOGEBUSDBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/ScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/StakedScholarDogeToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/Staking.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WBNBBond/WBNBBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WFTMBond/SDAOUSDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/WFTMBond/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/generated/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SDAOUSDCBond.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/SDAODAIBond.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StakedScholarDAOToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/StakedScholarDAOToken.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/USDCBond.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WFTMBond.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/WFTMBond.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/BondDiscounts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/BondDiscounts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/DailyStakingReward.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/DailyStakingReward.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Price.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Price.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ProtocolMetrics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ProtocolMetrics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/SDAOie.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/SDAOie.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subgraph.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/subgraph.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="23rgxMP4MYC9tUrZBCwdvDoxbWK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="640e955f-9174-44e9-be40-43968c953e68" name="Changes" comment="" />
+      <created>1642497864716</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1642497864716</updated>
+      <workItem from="1642497866095" duration="1867000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/utils/Constants.ts</url>
+          <line>10</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

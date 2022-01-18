@@ -6,7 +6,7 @@ import { toDecimal } from "./utils/Decimals"
 import { WFTMBOND_TOKEN } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
-import { getFTMUSDCRate } from './utils/Price'
+import { getFTMDAIRate } from './utils/Price'
 
 export function handleDeposit(call: DepositCall): void {
     let sdaoie = loadOrCreateSDAOie(call.transaction.from)
@@ -18,7 +18,7 @@ export function handleDeposit(call: DepositCall): void {
     deposit.transaction = transaction.id
     deposit.sdaoie = sdaoie.id
     deposit.amount = amount
-    deposit.value = amount.times(getFTMUSDCRate())
+    deposit.value = amount.times(getFTMDAIRate())
     deposit.maxPremium = toDecimal(call.inputs._maxPrice)
     deposit.token = token.id;
     deposit.timestamp = transaction.timestamp;

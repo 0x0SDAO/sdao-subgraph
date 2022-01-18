@@ -166,7 +166,7 @@ export class OwnershipPushed__Params {
   }
 }
 
-export class WFTMBond__adjustmentResult {
+export class SDAODAIBond__adjustmentResult {
   value0: boolean;
   value1: BigInt;
   value2: BigInt;
@@ -198,7 +198,7 @@ export class WFTMBond__adjustmentResult {
   }
 }
 
-export class WFTMBond__bondInfoResult {
+export class SDAODAIBond__bondInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -221,25 +221,28 @@ export class WFTMBond__bondInfoResult {
   }
 }
 
-export class WFTMBond__termsResult {
+export class SDAODAIBond__termsResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
   value3: BigInt;
   value4: BigInt;
+  value5: BigInt;
 
   constructor(
     value0: BigInt,
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: BigInt,
+    value5: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -249,13 +252,14 @@ export class WFTMBond__termsResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
+    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
     return map;
   }
 }
 
-export class WFTMBond extends ethereum.SmartContract {
-  static bind(address: Address): WFTMBond {
-    return new WFTMBond("WFTMBond", address);
+export class SDAODAIBond extends ethereum.SmartContract {
+  static bind(address: Address): SDAODAIBond {
+    return new SDAODAIBond("SDAODAIBond", address);
   }
 
   DAO(): Address {
@@ -273,29 +277,14 @@ export class WFTMBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  SDAO(): Address {
-    let result = super.call("SDAO", "SDAO():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_SDAO(): ethereum.CallResult<Address> {
-    let result = super.tryCall("SDAO", "SDAO():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  adjustment(): WFTMBond__adjustmentResult {
+  adjustment(): SDAODAIBond__adjustmentResult {
     let result = super.call(
       "adjustment",
       "adjustment():(bool,uint256,uint256,uint256,uint256)",
       []
     );
 
-    return new WFTMBond__adjustmentResult(
+    return new SDAODAIBond__adjustmentResult(
       result[0].toBoolean(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -304,7 +293,7 @@ export class WFTMBond extends ethereum.SmartContract {
     );
   }
 
-  try_adjustment(): ethereum.CallResult<WFTMBond__adjustmentResult> {
+  try_adjustment(): ethereum.CallResult<SDAODAIBond__adjustmentResult> {
     let result = super.tryCall(
       "adjustment",
       "adjustment():(bool,uint256,uint256,uint256,uint256)",
@@ -315,7 +304,7 @@ export class WFTMBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new WFTMBond__adjustmentResult(
+      new SDAODAIBond__adjustmentResult(
         value[0].toBoolean(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -325,29 +314,33 @@ export class WFTMBond extends ethereum.SmartContract {
     );
   }
 
-  assetPrice(): BigInt {
-    let result = super.call("assetPrice", "assetPrice():(int256)", []);
+  bondCalculator(): Address {
+    let result = super.call("bondCalculator", "bondCalculator():(address)", []);
 
-    return result[0].toBigInt();
+    return result[0].toAddress();
   }
 
-  try_assetPrice(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("assetPrice", "assetPrice():(int256)", []);
+  try_bondCalculator(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "bondCalculator",
+      "bondCalculator():(address)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  bondInfo(param0: Address): WFTMBond__bondInfoResult {
+  bondInfo(param0: Address): SDAODAIBond__bondInfoResult {
     let result = super.call(
       "bondInfo",
       "bondInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
-    return new WFTMBond__bondInfoResult(
+    return new SDAODAIBond__bondInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -355,7 +348,9 @@ export class WFTMBond extends ethereum.SmartContract {
     );
   }
 
-  try_bondInfo(param0: Address): ethereum.CallResult<WFTMBond__bondInfoResult> {
+  try_bondInfo(
+    param0: Address
+  ): ethereum.CallResult<SDAODAIBond__bondInfoResult> {
     let result = super.tryCall(
       "bondInfo",
       "bondInfo(address):(uint256,uint256,uint256,uint256)",
@@ -366,7 +361,7 @@ export class WFTMBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new WFTMBond__bondInfoResult(
+      new SDAODAIBond__bondInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -487,6 +482,25 @@ export class WFTMBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  isLiquidityBond(): boolean {
+    let result = super.call("isLiquidityBond", "isLiquidityBond():(bool)", []);
+
+    return result[0].toBoolean();
+  }
+
+  try_isLiquidityBond(): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "isLiquidityBond",
+      "isLiquidityBond():(bool)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   lastDecay(): BigInt {
@@ -661,6 +675,21 @@ export class WFTMBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  sdao(): Address {
+    let result = super.call("sdao", "sdao():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_sdao(): ethereum.CallResult<Address> {
+    let result = super.tryCall("sdao", "sdao():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   staking(): Address {
     let result = super.call("staking", "staking():(address)", []);
 
@@ -699,26 +728,27 @@ export class WFTMBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  terms(): WFTMBond__termsResult {
+  terms(): SDAODAIBond__termsResult {
     let result = super.call(
       "terms",
-      "terms():(uint256,uint256,uint256,uint256,uint256)",
+      "terms():(uint256,uint256,uint256,uint256,uint256,uint256)",
       []
     );
 
-    return new WFTMBond__termsResult(
+    return new SDAODAIBond__termsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toBigInt(),
+      result[5].toBigInt()
     );
   }
 
-  try_terms(): ethereum.CallResult<WFTMBond__termsResult> {
+  try_terms(): ethereum.CallResult<SDAODAIBond__termsResult> {
     let result = super.tryCall(
       "terms",
-      "terms():(uint256,uint256,uint256,uint256,uint256)",
+      "terms():(uint256,uint256,uint256,uint256,uint256,uint256)",
       []
     );
     if (result.reverted) {
@@ -726,12 +756,13 @@ export class WFTMBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new WFTMBond__termsResult(
+      new SDAODAIBond__termsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
+        value[4].toBigInt(),
+        value[5].toBigInt()
       )
     );
   }
@@ -799,7 +830,7 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _SDAO(): Address {
+  get _sdao(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
@@ -815,7 +846,7 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[3].value.toAddress();
   }
 
-  get _feed(): Address {
+  get _bondCalculator(): Address {
     return this._call.inputValues[4].value.toAddress();
   }
 }
@@ -903,12 +934,16 @@ export class InitializeBondTermsCall__Inputs {
     return this._call.inputValues[3].value.toBigInt();
   }
 
-  get _maxDebt(): BigInt {
+  get _fee(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
   }
 
-  get _initialDebt(): BigInt {
+  get _maxDebt(): BigInt {
     return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get _initialDebt(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
   }
 }
 
