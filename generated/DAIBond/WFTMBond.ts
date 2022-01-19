@@ -288,6 +288,36 @@ export class WFTMBond extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  _newOwner(): Address {
+    let result = super.call("_newOwner", "_newOwner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__newOwner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_newOwner", "_newOwner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _owner(): Address {
+    let result = super.call("_owner", "_owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_owner", "_owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   adjustment(): WFTMBond__adjustmentResult {
     let result = super.call(
       "adjustment",
@@ -582,21 +612,6 @@ export class WFTMBond extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  policy(): Address {
-    let result = super.call("policy", "policy():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_policy(): ethereum.CallResult<Address> {
-    let result = super.tryCall("policy", "policy():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   principle(): Address {

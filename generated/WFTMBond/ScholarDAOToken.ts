@@ -157,6 +157,36 @@ export class ScholarDAOToken extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
+  _newOwner(): Address {
+    let result = super.call("_newOwner", "_newOwner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__newOwner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_newOwner", "_newOwner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _owner(): Address {
+    let result = super.call("_owner", "_owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_owner", "_owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   allowance(owner: Address, spender: Address): BigInt {
     let result = super.call(
       "allowance",
@@ -218,6 +248,21 @@ export class ScholarDAOToken extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  claimEnabled(): boolean {
+    let result = super.call("claimEnabled", "claimEnabled():(bool)", []);
+
+    return result[0].toBoolean();
+  }
+
+  try_claimEnabled(): ethereum.CallResult<boolean> {
+    let result = super.tryCall("claimEnabled", "claimEnabled():(bool)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   decimals(): i32 {
@@ -331,21 +376,6 @@ export class ScholarDAOToken extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  policy(): Address {
-    let result = super.call("policy", "policy():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_policy(): ethereum.CallResult<Address> {
-    let result = super.tryCall("policy", "policy():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   psdao(): Address {
@@ -714,6 +744,32 @@ export class DecreaseAllowanceCall__Outputs {
 
   get value0(): boolean {
     return this._call.outputValues[0].value.toBoolean();
+  }
+}
+
+export class EnableClaimCall extends ethereum.Call {
+  get inputs(): EnableClaimCall__Inputs {
+    return new EnableClaimCall__Inputs(this);
+  }
+
+  get outputs(): EnableClaimCall__Outputs {
+    return new EnableClaimCall__Outputs(this);
+  }
+}
+
+export class EnableClaimCall__Inputs {
+  _call: EnableClaimCall;
+
+  constructor(call: EnableClaimCall) {
+    this._call = call;
+  }
+}
+
+export class EnableClaimCall__Outputs {
+  _call: EnableClaimCall;
+
+  constructor(call: EnableClaimCall) {
+    this._call = call;
   }
 }
 
